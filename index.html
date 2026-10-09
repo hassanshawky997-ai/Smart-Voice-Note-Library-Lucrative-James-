@@ -1,39 +1,42 @@
-<title>James Library</title>
+<title>Smart Voice Note Library — Lucrative James</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Source+Serif+4:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:wght@400;700&family=Public+Sans:wght@400;500;600;700&display=swap">
 <style>
-/* Edit bay, Slate Memo treatment: cool slate neutrals, serif headline, steel-blue accent, amber for mentions */
+/* Ink & Slate treatment: near-black ink, Libre Caslon display/text serif, steel-blue accent, brighter gold for mentions */
 :root{
   --bg:#f3f4f6;--panel:#ffffff;--line:#d9dce1;--fg:#0f1115;--muted:#5b6472;--label:#475266;
   --accent:#2f4664;--accent-fg:#ffffff;--accent-soft:#e6eaf0;
-  --pin:#b8923f;--mark:#fde8c4;--mark-fg:#1e2430;--hl:#eef1f5;--wave:#c9ccd3;
-  --serif:"Source Serif 4",Georgia,serif;
-  --sans:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --pin:#b8923f;--mark:#ffd34d;--mark-fg:#1e1404;--hl:#eef1f5;--wave:#c9ccd3;
+  --disp:"Libre Caslon Display",Georgia,serif;
+  --serif:"Libre Caslon Text",Georgia,serif;
+  --sans:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
   --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#1a1e26;--panel:#20252f;--line:#2e3542;--fg:#e7e9ee;--muted:#8b93a3;--label:#a9b2c4;
   --accent:#8ba3c4;--accent-fg:#101420;--accent-soft:#283040;
-  --pin:#cda465;--mark:#3a3015;--mark-fg:#f2dcae;--hl:#242a35;--wave:#394252;color-scheme:dark}}
+  --pin:#cda465;--mark:#4a3b12;--mark-fg:#ffdf8a;--hl:#242a35;--wave:#394252;color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#1a1e26;--panel:#20252f;--line:#2e3542;--fg:#e7e9ee;--muted:#8b93a3;--label:#a9b2c4;
   --accent:#8ba3c4;--accent-fg:#101420;--accent-soft:#283040;
-  --pin:#cda465;--mark:#3a3015;--mark-fg:#f2dcae;--hl:#242a35;--wave:#394252;color-scheme:dark}
+  --pin:#cda465;--mark:#4a3b12;--mark-fg:#ffdf8a;--hl:#242a35;--wave:#394252;color-scheme:dark}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html,body{height:100%}
-body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:14px;display:flex;flex-direction:column;min-height:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:15.5px;display:flex;flex-direction:column;min-height:0}
 button{font:inherit;color:inherit;cursor:pointer}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-mark{background:var(--mark);color:var(--mark-fg);border-radius:3px;padding:0 2px}
+mark{background:var(--mark);color:var(--mark-fg);border-radius:3px;padding:0 2px;font-weight:600}
 
-header{display:flex;align-items:center;gap:20px;padding:12px 24px;background:var(--panel);border-bottom:1px solid var(--line);flex-wrap:wrap}
-.brand{font-weight:600;font-size:15px;white-space:nowrap}
-.brand span{color:var(--muted);font-weight:400}
-.search{flex:1 1 420px;display:flex;align-items:center;gap:10px;border:1.5px solid var(--line);border-radius:8px;padding:8px 12px;max-width:680px;background:var(--panel);min-width:0}
-.search:focus-within{border-color:var(--accent)}
+header{display:flex;align-items:center;gap:16px;padding:14px 28px;background:var(--panel);border-bottom:1px solid var(--line);flex-wrap:wrap}
+.brand{font:600 19px var(--disp);color:var(--fg);white-space:nowrap;display:flex;align-items:baseline;gap:10px}
+.brand .sub{font:600 11px var(--sans);color:var(--muted);text-transform:uppercase;letter-spacing:.07em}
+.hdiv{width:1px;height:22px;background:var(--line);flex:none}
+.pill{font:700 12.5px var(--sans);color:var(--accent);background:var(--accent-soft);padding:5px 11px;border-radius:20px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.search{margin-left:auto;flex:0 1 360px;display:flex;align-items:center;gap:10px;border:1.5px solid var(--accent);border-radius:9px;padding:9px 14px;max-width:420px;min-width:220px;background:var(--panel)}
+.search:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
 .search svg{flex:none;stroke:var(--muted)}
-.search input{border:0;outline:0;font:500 15px var(--sans);flex:1;min-width:0;color:var(--fg);background:transparent}
+.search input{border:0;outline:0;font:500 15.5px var(--sans);flex:1;min-width:0;color:var(--fg);background:transparent}
 .search input::placeholder{color:var(--muted);font-weight:400}
 .stat{font:12.5px var(--mono);color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
 .clear{border:0;background:none;color:var(--muted);padding:2px 4px;font-size:16px;line-height:1}
@@ -49,9 +52,9 @@ main{flex:1;display:grid;grid-template-columns:minmax(300px,400px) 1fr;min-heigh
 .item:hover{background:color-mix(in srgb,var(--panel) 60%,transparent)}
 .item .top{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .item .vn{font:600 11px var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
-.item .t{font:600 14px var(--sans);line-height:1.4;min-width:0;color:var(--fg)}
-.item .t .lbl{color:var(--label);font-weight:700;margin-right:3px}
-.item .d{font:12px var(--sans);color:var(--muted)}
+.item .t{font:600 17px var(--serif);line-height:1.35;min-width:0;color:var(--fg)}
+.item .t .lbl{color:var(--label);font:700 12px var(--sans);margin-right:4px}
+.item .d{font:12.5px var(--sans);color:var(--muted)}
 .item .d .lbl{color:var(--label);font-weight:700;margin-right:3px}
 .item .c{font:700 11.5px var(--sans);background:var(--mark);color:var(--mark-fg);border-radius:20px;padding:3px 10px;font-variant-numeric:tabular-nums;white-space:nowrap}
 .item .c .lbl{color:inherit;font-weight:700;margin-right:3px}
@@ -65,7 +68,7 @@ main{flex:1;display:grid;grid-template-columns:minmax(300px,400px) 1fr;min-heigh
 .meta .file{user-select:all}
 .meta .lbl,.topic-lbl{color:var(--label);font:700 11px var(--sans);text-transform:uppercase;letter-spacing:.05em}
 .topic-lbl{margin-top:14px}
-h1{margin:4px 0 0;font:600 27px/1.3 var(--serif);text-wrap:balance}
+h1{margin:4px 0 0;font:600 30px/1.3 var(--disp);text-wrap:balance;color:var(--fg)}
 .player{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 18px;display:flex;flex-direction:column;gap:10px}
 .ctrl{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .play{width:40px;height:40px;border-radius:50%;background:var(--accent);border:0;display:grid;place-items:center;flex:none}
@@ -92,7 +95,7 @@ h1{margin:4px 0 0;font:600 27px/1.3 var(--serif);text-wrap:balance}
 .toggle button.on{background:var(--accent-soft);color:var(--accent);font-weight:500}
 .hint{font-size:12.5px;color:var(--muted)}
 .tx{margin:0 36px 32px;background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden}
-.seg{display:grid;grid-template-columns:62px 1fr;gap:14px;padding:7px 18px;line-height:1.6}
+.seg{display:grid;grid-template-columns:62px 1fr;gap:14px;padding:8px 18px;line-height:1.65;font-family:var(--serif);font-size:16px}
 .seg+.seg{border-top:1px solid transparent}
 .seg .ts{font:12px var(--mono);color:var(--accent);background:none;border:0;padding:3px 0 0;text-align:left;font-variant-numeric:tabular-nums;align-self:start}
 .seg .ts:hover{text-decoration:underline}
@@ -126,7 +129,9 @@ h1{margin:4px 0 0;font:600 27px/1.3 var(--serif);text-wrap:balance}
 </style>
 
 <header>
-  <div class="brand">James Library <span id="sub">· 504 recordings</span></div>
+  <div class="brand">Smart Voice Note Library<span class="sub">Lucrative James</span></div>
+  <div class="hdiv"></div>
+  <span class="pill" id="sub"></span>
   <label class="search" for="q">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
     <input id="q" type="search" autocomplete="off" spellcheck="false" placeholder="Search a keyword…">
@@ -174,7 +179,7 @@ function sortResults(){
 }
 
 function renderHeader(){
-  $('sub').textContent=`· ${REC.length} recordings · ${TOTAL_H} hrs`;
+  $('sub').textContent=`${REC.length} recordings · ${TOTAL_H} hrs`;
   $('stat').textContent=S.re?`${S.total} mention${S.total===1?'':'s'} · ${S.results.length} recording${S.results.length===1?'':'s'}`:'';
   $('clear').hidden=!S.q;
   $('binlabel').textContent=S.re?'Search results':'Recording library';
