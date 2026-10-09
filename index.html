@@ -4,19 +4,19 @@
 <style>
 /* Edit bay, Slate Memo treatment: cool slate neutrals, serif headline, steel-blue accent, amber for mentions */
 :root{
-  --bg:#f3f4f6;--panel:#ffffff;--line:#d9dce1;--fg:#1e2430;--muted:#6b7280;
-  --accent:#3b4f6b;--accent-fg:#ffffff;--accent-soft:#e6eaf0;
+  --bg:#f3f4f6;--panel:#ffffff;--line:#d9dce1;--fg:#0f1115;--muted:#5b6472;--label:#475266;
+  --accent:#2f4664;--accent-fg:#ffffff;--accent-soft:#e6eaf0;
   --pin:#b8923f;--mark:#fde8c4;--mark-fg:#1e2430;--hl:#eef1f5;--wave:#c9ccd3;
   --serif:"Source Serif 4",Georgia,serif;
   --sans:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
   --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#1a1e26;--panel:#20252f;--line:#2e3542;--fg:#e7e9ee;--muted:#8b93a3;
+  --bg:#1a1e26;--panel:#20252f;--line:#2e3542;--fg:#e7e9ee;--muted:#8b93a3;--label:#a9b2c4;
   --accent:#8ba3c4;--accent-fg:#101420;--accent-soft:#283040;
   --pin:#cda465;--mark:#3a3015;--mark-fg:#f2dcae;--hl:#242a35;--wave:#394252;color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#1a1e26;--panel:#20252f;--line:#2e3542;--fg:#e7e9ee;--muted:#8b93a3;
+  --bg:#1a1e26;--panel:#20252f;--line:#2e3542;--fg:#e7e9ee;--muted:#8b93a3;--label:#a9b2c4;
   --accent:#8ba3c4;--accent-fg:#101420;--accent-soft:#283040;
   --pin:#cda465;--mark:#3a3015;--mark-fg:#f2dcae;--hl:#242a35;--wave:#394252;color-scheme:dark}
 *{box-sizing:border-box}
@@ -50,10 +50,11 @@ main{flex:1;display:grid;grid-template-columns:minmax(300px,400px) 1fr;min-heigh
 .item .top{display:flex;justify-content:space-between;align-items:center;gap:10px}
 .item .vn{font:600 11px var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
 .item .t{font:600 14px var(--sans);line-height:1.4;min-width:0;color:var(--fg)}
-.item .t .lbl{color:var(--muted);font-weight:600;margin-right:3px}
+.item .t .lbl{color:var(--label);font-weight:700;margin-right:3px}
 .item .d{font:12px var(--sans);color:var(--muted)}
-.item .d .lbl{font-weight:600;margin-right:3px}
-.item .c{font:600 11.5px var(--mono);background:var(--accent-soft);color:var(--accent);border-radius:20px;padding:2px 9px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.item .d .lbl{color:var(--label);font-weight:700;margin-right:3px}
+.item .c{font:700 11.5px var(--sans);background:var(--mark);color:var(--mark-fg);border-radius:20px;padding:3px 10px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.item .c .lbl{color:inherit;font-weight:700;margin-right:3px}
 .item.on{background:var(--panel);box-shadow:inset 3px 0 0 var(--accent)}
 .none{padding:24px 20px;color:var(--muted);line-height:1.55}
 .none b{color:var(--fg)}
@@ -62,7 +63,7 @@ main{flex:1;display:grid;grid-template-columns:minmax(300px,400px) 1fr;min-heigh
 .sticky{position:sticky;top:0;z-index:2;background:var(--bg);padding:24px 36px 16px;display:flex;flex-direction:column;gap:16px}
 .meta{font:12px var(--mono);color:var(--muted);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .meta .file{user-select:all}
-.meta .lbl,.topic-lbl{color:var(--muted);font:600 11px var(--sans);text-transform:uppercase;letter-spacing:.05em}
+.meta .lbl,.topic-lbl{color:var(--label);font:700 11px var(--sans);text-transform:uppercase;letter-spacing:.05em}
 .topic-lbl{margin-top:14px}
 h1{margin:4px 0 0;font:600 27px/1.3 var(--serif);text-wrap:balance}
 .player{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 18px;display:flex;flex-direction:column;gap:10px}
@@ -184,7 +185,7 @@ function renderList(){
   const L=$('list');
   if(S.re&&!S.results.length){L.innerHTML=`<div class="none">No recordings mention <b>“${esc(S.q.trim())}”</b>.<br>Try a shorter word or another spelling. The transcripts were made by speech recognition, so names and slang are sometimes spelled oddly (for example “Adesanya” might show up as “Adisanya”).</div>`;return}
   L.innerHTML=S.results.map((x,i)=>`<button class="item${S.sel&&x.r===S.sel.r?' on':''}" data-i="${i}" type="button">
-    <div class="top"><span class="vn">Voice Note ${x.r.num}</span>${S.re?`<span class="c">${x.hits.length}</span>`:''}</div>
+    <div class="top"><span class="vn">Voice Note ${x.r.num}</span>${S.re?`<span class="c"><span class="lbl">Mentions:</span>${x.hits.length}</span>`:''}</div>
     <div class="t"><span class="lbl">Topic:</span> ${hl(x.r.title,S.re)}</div>
     <div class="d"><span class="lbl">Length:</span> ${fmt(x.r.dur)}</div>
   </button>`).join('');
