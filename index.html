@@ -4,7 +4,7 @@
 <style>
 /* Ink & Slate treatment: near-black ink, Inter throughout (clean, neutral, professional), steel-blue accent, brighter gold for mentions */
 :root{
-  --bg:#f3f4f6;--panel:#ffffff;--line:#d9dce1;--fg:#0f1115;--muted:#5b6472;--label:#475266;
+  --bg:#f3f4f6;--panel:#ffffff;--line:#d9dce1;--fg:#0f1115;--muted:#5b6472;--label:#475266;--green:#2f7a4f;
   --accent:#2f4664;--accent-fg:#ffffff;--accent-soft:#e6eaf0;
   --pin:#b8923f;--mark:#ffd34d;--mark-fg:#1e1404;--hl:#eef1f5;--wave:#c9ccd3;
   --disp:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
@@ -13,11 +13,11 @@
   --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#1a1e26;--panel:#20252f;--line:#2e3542;--fg:#e7e9ee;--muted:#8b93a3;--label:#a9b2c4;
+  --bg:#1a1e26;--panel:#20252f;--line:#2e3542;--fg:#e7e9ee;--muted:#8b93a3;--label:#a9b2c4;--green:#6fc993;
   --accent:#8ba3c4;--accent-fg:#101420;--accent-soft:#283040;
   --pin:#cda465;--mark:#4a3b12;--mark-fg:#ffdf8a;--hl:#242a35;--wave:#394252;color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#1a1e26;--panel:#20252f;--line:#2e3542;--fg:#e7e9ee;--muted:#8b93a3;--label:#a9b2c4;
+  --bg:#1a1e26;--panel:#20252f;--line:#2e3542;--fg:#e7e9ee;--muted:#8b93a3;--label:#a9b2c4;--green:#6fc993;
   --accent:#8ba3c4;--accent-fg:#101420;--accent-soft:#283040;
   --pin:#cda465;--mark:#4a3b12;--mark-fg:#ffdf8a;--hl:#242a35;--wave:#394252;color-scheme:dark}
 *{box-sizing:border-box}
@@ -54,8 +54,8 @@ main{flex:1;display:grid;grid-template-columns:minmax(300px,400px) 1fr;min-heigh
 .item .vn{font:600 11px var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
 .item .t{font:700 16.5px var(--serif);line-height:1.35;min-width:0;color:var(--fg)}
 .item .t .lbl{color:var(--label);font:700 12px var(--sans);margin-right:4px}
-.item .d{font:12.5px var(--sans);color:var(--muted)}
-.item .d .lbl{color:var(--label);font-weight:700;margin-right:3px}
+.item .d{font:700 12.5px var(--sans);color:var(--green)}
+.item .d .lbl{color:var(--green);font-weight:700;margin-right:3px}
 .item .c{font:700 11.5px var(--sans);background:var(--mark);color:var(--mark-fg);border-radius:20px;padding:3px 10px;font-variant-numeric:tabular-nums;white-space:nowrap}
 .item .c .lbl{color:inherit;font-weight:700;margin-right:3px}
 .item.on{background:var(--panel);box-shadow:inset 3px 0 0 var(--accent)}
@@ -67,6 +67,8 @@ main{flex:1;display:grid;grid-template-columns:minmax(300px,400px) 1fr;min-heigh
 .meta{font:12px var(--mono);color:var(--muted);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .meta .file{user-select:all}
 .meta .lbl,.topic-lbl{color:var(--label);font:700 11px var(--sans);text-transform:uppercase;letter-spacing:.05em}
+.meta .glen{color:var(--green);font:700 11px var(--sans);text-transform:uppercase;letter-spacing:.05em}
+.meta .gval{color:var(--green);font-weight:700}
 .topic-lbl{margin-top:14px}
 h1{margin:4px 0 0;font:700 29px/1.3 var(--disp);text-wrap:balance;color:var(--fg)}
 .player{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 18px;display:flex;flex-direction:column;gap:10px}
@@ -220,7 +222,7 @@ function renderView(){
   } else tx=r.segs.map((s,j)=>segHTML(r,j,hitSet.has(j),re)).join('');
   const ticks=[0,.25,.5,.75,1].map(f=>`<span>${fmt(d*f)}</span>`).join('');
   $('view').innerHTML=`<div class="sticky">
-    <div><div class="meta"><span class="lbl">Voice Note</span> ${r.num}·<span class="file" title="Original file name">${esc(r.file)}</span>·<span class="lbl">Length</span> ${fmt(r.dur)}</div><div class="topic-lbl">Topic</div><h1>${esc(r.title)}</h1></div>
+    <div><div class="meta"><span class="lbl">Voice Note</span> ${r.num}·<span class="file" title="Original file name">${esc(r.file)}</span>·<span class="glen">Length</span> <span class="gval">${fmt(r.dur)}</span></div><div class="topic-lbl">Topic</div><h1>${esc(r.title)}</h1></div>
     <div class="player">
       <div class="ctrl">
         <button class="play" id="play" type="button" aria-label="Play"><svg id="pi" width="14" height="14" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></svg></button>
