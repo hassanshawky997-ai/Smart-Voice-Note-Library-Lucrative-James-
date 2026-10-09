@@ -1,23 +1,24 @@
 <title>James Library</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Source+Serif+4:wght@400;600&display=swap">
 <style>
-/* Edit bay: results bin on the left, selected recording with a to-scale mention timeline and transcript on the right */
+/* Edit bay, Slate Memo treatment: cool slate neutrals, serif headline, steel-blue accent, amber for mentions */
 :root{
-  --bg:#eef0f3;--panel:#ffffff;--line:#d9dde4;--fg:#1b2230;--muted:#667085;
-  --accent:#2f5bd3;--accent-fg:#ffffff;--accent-soft:#e3eafc;
-  --pin:#d99a00;--mark:#ffe08a;--mark-fg:#1b2230;--hl:#fff8e0;--wave:#c9d0db;
-  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --bg:#f3f4f6;--panel:#ffffff;--line:#d9dce1;--fg:#1e2430;--muted:#6b7280;
+  --accent:#3b4f6b;--accent-fg:#ffffff;--accent-soft:#e6eaf0;
+  --pin:#b8923f;--mark:#fde8c4;--mark-fg:#1e2430;--hl:#eef1f5;--wave:#c9ccd3;
+  --serif:"Source Serif 4",Georgia,serif;
+  --sans:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#12161d;--panel:#1a2029;--line:#2a3240;--fg:#e6e9ef;--muted:#8b95a7;
-  --accent:#7c9cff;--accent-fg:#0d1220;--accent-soft:#232d4a;
-  --pin:#f0b429;--mark:#5c4a12;--mark-fg:#ffe7a3;--hl:#221f14;--wave:#364052;color-scheme:dark}}
+  --bg:#1a1e26;--panel:#20252f;--line:#2e3542;--fg:#e7e9ee;--muted:#8b93a3;
+  --accent:#8ba3c4;--accent-fg:#101420;--accent-soft:#283040;
+  --pin:#cda465;--mark:#3a3015;--mark-fg:#f2dcae;--hl:#242a35;--wave:#394252;color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#12161d;--panel:#1a2029;--line:#2a3240;--fg:#e6e9ef;--muted:#8b95a7;
-  --accent:#7c9cff;--accent-fg:#0d1220;--accent-soft:#232d4a;
-  --pin:#f0b429;--mark:#5c4a12;--mark-fg:#ffe7a3;--hl:#221f14;--wave:#364052;color-scheme:dark}
+  --bg:#1a1e26;--panel:#20252f;--line:#2e3542;--fg:#e7e9ee;--muted:#8b93a3;
+  --accent:#8ba3c4;--accent-fg:#101420;--accent-soft:#283040;
+  --pin:#cda465;--mark:#3a3015;--mark-fg:#f2dcae;--hl:#242a35;--wave:#394252;color-scheme:dark}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html,body{height:100%}
@@ -44,12 +45,15 @@ main{flex:1;display:grid;grid-template-columns:minmax(300px,400px) 1fr;min-heigh
 .sort{border:0;background:none;font:inherit;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;padding:2px 0}
 .sort:hover{color:var(--fg)}
 .list{overflow:auto;flex:1;min-height:0}
-.item{display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:center;padding:11px 20px;border-top:1px solid var(--line);cursor:pointer;width:100%;text-align:left;background:none;border-left:0;border-right:0;border-bottom:0}
+.item{display:flex;flex-direction:column;gap:4px;padding:12px 20px;border-top:1px solid var(--line);cursor:pointer;width:100%;text-align:left;background:none;border-left:0;border-right:0;border-bottom:0}
 .item:hover{background:color-mix(in srgb,var(--panel) 60%,transparent)}
-.item .n{font:12px var(--mono);color:var(--muted)}
-.item .t{font-weight:500;line-height:1.3;min-width:0}
-.item .d{font:12px var(--mono);color:var(--muted);margin-top:3px}
-.item .c{font:500 12px var(--mono);background:var(--accent-soft);color:var(--accent);border-radius:20px;padding:3px 9px;font-variant-numeric:tabular-nums}
+.item .top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.item .vn{font:600 11px var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+.item .t{font:600 14px var(--sans);line-height:1.4;min-width:0;color:var(--fg)}
+.item .t .lbl{color:var(--muted);font-weight:600;margin-right:3px}
+.item .d{font:12px var(--sans);color:var(--muted)}
+.item .d .lbl{font-weight:600;margin-right:3px}
+.item .c{font:600 11.5px var(--mono);background:var(--accent-soft);color:var(--accent);border-radius:20px;padding:2px 9px;font-variant-numeric:tabular-nums;white-space:nowrap}
 .item.on{background:var(--panel);box-shadow:inset 3px 0 0 var(--accent)}
 .none{padding:24px 20px;color:var(--muted);line-height:1.55}
 .none b{color:var(--fg)}
@@ -58,7 +62,9 @@ main{flex:1;display:grid;grid-template-columns:minmax(300px,400px) 1fr;min-heigh
 .sticky{position:sticky;top:0;z-index:2;background:var(--bg);padding:24px 36px 16px;display:flex;flex-direction:column;gap:16px}
 .meta{font:12px var(--mono);color:var(--muted);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .meta .file{user-select:all}
-h1{margin:4px 0 0;font-size:24px;font-weight:600;line-height:1.2;text-wrap:balance}
+.meta .lbl,.topic-lbl{color:var(--muted);font:600 11px var(--sans);text-transform:uppercase;letter-spacing:.05em}
+.topic-lbl{margin-top:14px}
+h1{margin:4px 0 0;font:600 27px/1.3 var(--serif);text-wrap:balance}
 .player{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 18px;display:flex;flex-direction:column;gap:10px}
 .ctrl{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .play{width:40px;height:40px;border-radius:50%;background:var(--accent);border:0;display:grid;place-items:center;flex:none}
@@ -177,7 +183,11 @@ function renderHeader(){
 function renderList(){
   const L=$('list');
   if(S.re&&!S.results.length){L.innerHTML=`<div class="none">No recordings mention <b>“${esc(S.q.trim())}”</b>.<br>Try a shorter word or another spelling. The transcripts were made by speech recognition, so names and slang are sometimes spelled oddly (for example “Adesanya” might show up as “Adisanya”).</div>`;return}
-  L.innerHTML=S.results.map((x,i)=>`<button class="item${S.sel&&x.r===S.sel.r?' on':''}" data-i="${i}" type="button"><div class="n">#${x.r.num}</div><div class="t">${hl(x.r.title,S.re)}<div class="d">${fmt(x.r.dur)}</div></div>${S.re?`<div class="c">${x.hits.length}</div>`:'<div></div>'}</button>`).join('');
+  L.innerHTML=S.results.map((x,i)=>`<button class="item${S.sel&&x.r===S.sel.r?' on':''}" data-i="${i}" type="button">
+    <div class="top"><span class="vn">Voice Note ${x.r.num}</span>${S.re?`<span class="c">${x.hits.length}</span>`:''}</div>
+    <div class="t"><span class="lbl">Topic:</span> ${hl(x.r.title,S.re)}</div>
+    <div class="d"><span class="lbl">Length:</span> ${fmt(x.r.dur)}</div>
+  </button>`).join('');
 }
 
 function select(x,{keepPos=false,scroll=true}={}){
@@ -204,7 +214,7 @@ function renderView(){
   } else tx=r.segs.map((s,j)=>segHTML(r,j,hitSet.has(j),re)).join('');
   const ticks=[0,.25,.5,.75,1].map(f=>`<span>${fmt(d*f)}</span>`).join('');
   $('view').innerHTML=`<div class="sticky">
-    <div><div class="meta"><span>#${r.num}</span>·<span class="file" title="Original file name">${esc(r.file)}</span>·<span>${fmt(r.dur)}</span></div><h1>${esc(r.title)}</h1></div>
+    <div><div class="meta"><span class="lbl">Voice Note</span> ${r.num}·<span class="file" title="Original file name">${esc(r.file)}</span>·<span class="lbl">Length</span> ${fmt(r.dur)}</div><div class="topic-lbl">Topic</div><h1>${esc(r.title)}</h1></div>
     <div class="player">
       <div class="ctrl">
         <button class="play" id="play" type="button" aria-label="Play"><svg id="pi" width="14" height="14" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></svg></button>
@@ -269,8 +279,8 @@ $('view').addEventListener('click',e=>{
   if(t.id==='play')return togglePlay();
   if(t.id==='prev')return goHit(S.hitPos-1);
   if(t.id==='next')return goHit(S.hitPos+1);
-  if(t.id==='copytc')return copy(`${r.file} @ ${fmt(S.cur)} (#${r.num} ${r.title})`,'Timecode copied');
-  if(t.id==='copyall')return copy(`${r.file} (#${r.num} ${r.title}) mentions of "${S.q.trim()}":\n`+S.hits.map(k=>`${fmt(r.segs[k].s)}  ${r.segs[k].t}`).join('\n'),`${S.hits.length} mentions copied`);
+  if(t.id==='copytc')return copy(`${r.file} @ ${fmt(S.cur)} (Voice Note ${r.num}, Topic: ${r.title})`,'Timecode copied');
+  if(t.id==='copyall')return copy(`${r.file} (Voice Note ${r.num}, Topic: ${r.title}) mentions of "${S.q.trim()}":\n`+S.hits.map(k=>`${fmt(r.segs[k].s)}  ${r.segs[k].t}`).join('\n'),`${S.hits.length} mentions copied`);
   if(t.dataset.only!==undefined){S.only=t.dataset.only==='1';store.set('jl-only',S.only?'1':'0');const pos=S.hitPos;renderView();S.hitPos=pos;updatePos();if(pos>=0)scrollToSeg(S.hits[pos],false);return}
   if(t.dataset.h!==undefined){e.stopPropagation();const i=+t.dataset.h;const k=S.hits[i];S.hitPos=i;seek(r.segs[k].s,true);scrollToSeg(k,true);return}
   if(t.classList.contains('ts')){seek(r.segs[+t.dataset.k].s,true);return}
