@@ -29,9 +29,14 @@ button{font:inherit;color:inherit;cursor:pointer}
 mark{background:var(--mark);color:var(--mark-fg);border-radius:3px;padding:0 2px;font-weight:600}
 
 header{display:flex;align-items:center;gap:16px;padding:14px 28px;background:var(--panel);border-bottom:1px solid var(--line);flex-wrap:wrap}
-.brand{font:700 19px var(--disp);color:var(--fg);white-space:nowrap;display:flex;align-items:baseline;gap:10px}
-.brand .sub{font:600 11px var(--sans);color:var(--muted);text-transform:uppercase;letter-spacing:.07em}
-.hdiv{width:1px;height:22px;background:var(--line);flex:none}
+.brand{display:flex;flex-direction:column;justify-content:center;gap:1px;white-space:nowrap}
+.brand .name{font:700 19px/1.15 var(--disp);color:var(--fg)}
+.brand .sub{font:600 10.5px var(--sans);color:var(--muted);text-transform:uppercase;letter-spacing:.14em}
+/* the mark is white on transparent, so it inverts to near-black for the light theme */
+.mark{height:42px;width:auto;display:block;flex:none;filter:invert(1)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .mark{filter:none}}
+:root[data-theme="dark"] .mark{filter:none}
+.hdiv{width:1px;height:34px;background:var(--line);flex:none}
 .pill{font:700 12.5px var(--sans);color:var(--accent);background:var(--accent-soft);padding:5px 11px;border-radius:20px;white-space:nowrap;font-variant-numeric:tabular-nums}
 .search{margin-left:auto;flex:0 1 360px;display:flex;align-items:center;gap:10px;border:1.5px solid var(--accent);border-radius:9px;padding:9px 14px;max-width:420px;min-width:220px;background:var(--panel)}
 .search:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
@@ -129,8 +134,10 @@ h1{margin:4px 0 0;font:700 29px/1.3 var(--disp);text-wrap:balance;color:var(--fg
 @media (max-width:820px){
   body{height:auto;display:block}
   html,body{height:auto}
-  header{padding:12px 16px}
+  header{padding:12px 16px;gap:12px}
   .hdiv{display:none}
+  .mark{height:34px}
+  .brand .name{font-size:17px}
   .cattiles{order:3;width:100%;overflow-x:auto;gap:6px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
   .cattiles::-webkit-scrollbar{display:none}
   .search{flex-wrap:wrap;row-gap:4px}
@@ -152,7 +159,9 @@ h1{margin:4px 0 0;font:700 29px/1.3 var(--disp);text-wrap:balance;color:var(--fg
 </style>
 
 <header>
-  <div class="brand">Smart Voice Note Library<span class="sub">Lucrative James</span></div>
+  <img class="mark" src="logo.png" width="184" height="168" alt="Lucrative James">
+  <div class="hdiv"></div>
+  <div class="brand"><span class="name">Smart Voice Note Library</span><span class="sub">Lucrative James</span></div>
   <div class="hdiv"></div>
   <div class="cattiles" id="cattiles"></div>
   <label class="search" for="q">
