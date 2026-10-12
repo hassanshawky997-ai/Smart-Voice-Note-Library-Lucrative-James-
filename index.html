@@ -117,6 +117,9 @@ h1{margin:4px 0 0;font:700 29px/1.3 var(--disp);text-wrap:balance;color:var(--fg
 .btns{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
 .btn{font:500 12.5px var(--sans);border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:7px 12px}
 .btn:hover{border-color:var(--accent)}
+.btn{cursor:pointer}
+a.btn{color:var(--fg);text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+a.btn svg{opacity:.6;flex:none}
 .track{position:relative;height:42px;cursor:pointer;touch-action:none}
 .track .wave,.track .done{position:absolute;inset:0;border-radius:4px;background:repeating-linear-gradient(90deg,var(--wave) 0 2px,transparent 2px 5px)}
 .track .done{right:auto;background:repeating-linear-gradient(90deg,var(--accent) 0 2px,transparent 2px 5px)}
@@ -301,6 +304,10 @@ function select(x,{keepPos=false,scroll=true}={}){
   if(S.hitPos>=0)scrollToSeg(S.hits[S.hitPos],false);else $('view').scrollTop=0;
 }
 
+/* the file the editor saves is named by its topic, not by its number */
+const dlName=r=>`${r.num} - ${String(r.title).replace(/[\/\\:*?"<>|\u0000-\u001f]+/g,' ').replace(/\s+/g,' ').trim().slice(0,90)||'recording'}.mp3`;
+const DLICON='<svg width="12" height="12" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v10m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
 function renderView(){
   const {r}=S.sel,d=r.dur||1,re=S.re;
   const hitSet=new Set(S.hits);
@@ -318,7 +325,7 @@ function renderView(){
         <button class="play" id="play" type="button" aria-label="Play"><svg id="pi" width="14" height="14" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></svg></button>
         <div class="tc"><b id="tc">${fmt(S.cur)}</b> <span>/ ${fmt(r.dur)}</span></div>
         ${re?`<div class="nav"><button id="prev" type="button" aria-label="Previous mention">‹</button><span id="pos"></span><button id="next" type="button" aria-label="Next mention">›</button></div>`:''}
-        <div class="btns"><button class="btn" id="copytc" type="button">Copy timecode</button>${re&&S.hits.length?'<button class="btn" id="copyall" type="button">Copy all mentions</button>':''}</div>
+        <div class="btns"><a class="btn" id="dl" href="a/${r.num}.mp3" download="${esc(dlName(r))}" title="Save this recording to your computer">${DLICON}Download</a><button class="btn" id="copytc" type="button">Copy timecode</button>${re&&S.hits.length?'<button class="btn" id="copyall" type="button">Copy all mentions</button>':''}</div>
       </div>
       <div class="track" id="track" role="slider" aria-label="Position in recording" aria-valuemin="0" aria-valuemax="${Math.round(d)}" tabindex="0"><div class="wave"></div><div class="done" id="done"></div>${S.hits.map((k,i)=>`<button class="hit" type="button" data-h="${i}" style="left:${Math.min(100,r.segs[k].s/d*100)}%" title="${fmt(r.segs[k].s)}" aria-label="Mention at ${fmt(r.segs[k].s)}"></button>`).join('')}<div class="head" id="head"></div></div>
       <div class="ticks">${ticks}</div>
